@@ -22,7 +22,7 @@ function App() {
   };
 
   return (
-    <div className="p-4 bg-white px-8 h-screen flex flex-col justify-between">
+    <div className=" bg-white m-auto px-8 h-screen flex flex-col justify-between max-w-[800px]">
       <div className="flex justify-center mt-10">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold text-center text-gray-800 uppercase text-left">
