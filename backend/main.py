@@ -5,11 +5,15 @@ import os
 import pathlib
 import subprocess
 from gitignore_parser import parse_gitignore
+import openai
 
 app = FastAPI()
 
+# OpenAI API Key
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 # Path to project files
-PROJECT_BASE_PATH = os.getenv("PROJECT_BASE_PATH", "../../dingo-diff")
+PROJECT_BASE_PATH = os.getenv("PROJECT_BASE_PATH", "./")
 
 # Domain description to help AI understand context
 domain_description = """
@@ -25,6 +29,8 @@ def get_all_project_files(base_path: str) -> List[str]:
     file_paths = []
     for root, dirs, files in os.walk(base_path):
         for file in files:
+            if not file.endswith(".py"):
+                continue
             full_path = os.path.join(root, file)
             rel_path = os.path.relpath(full_path, base_path)
             if not is_ignored(rel_path):
@@ -77,6 +83,21 @@ You are not afraid to make the developer cry! Show no mercy!
 """
     return prompt
 
+# --- AI Request Handler ---
+
+def get_code_review(prompt: str) -> str:
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a senior software engineer doing code reviews."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"OpenAI request failed: {str(e)}")
+
 # --- FastAPI Endpoint ---
 
 @app.post("/code-review")
@@ -85,4 +106,5 @@ def code_review(
     intent: str = Form(...)
 ):
     prompt = construct_prompt(diff, intent)
-    return {"prompt": prompt}
+    feedback = get_code_review(prompt)
+    return {"review": feedback}
