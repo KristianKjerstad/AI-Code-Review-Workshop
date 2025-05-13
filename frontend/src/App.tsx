@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { SubmitCodeForm } from './components/SubmitCodeForm/SubmitCodeForm';
+import { useState } from "react";
+import axios from "axios";
+import { SubmitCodeForm } from "./components/SubmitCodeForm/SubmitCodeForm";
 
 function App() {
   const [code, setCode] = useState("");
@@ -24,17 +24,19 @@ function App() {
   return (
     <div className="p-4 bg-white px-8 h-screen flex flex-col justify-between">
       <div className="flex justify-center mt-10">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mt-10">
-          Koala code
-        </h1>
-        <h2 className="text-2xl font-bold text-center text-gray-800 mt-10 ml-2">
-          reviewer
-        </h2>
+        <div className="flex flex-col">
+          <h1 className="text-2xl font-bold text-center text-gray-800 uppercase text-left">
+            Koala code
+          </h1>
+          <h2 className="text-3xl font-bold text-center text-gray-800 mt-0 uppercase text-left logo-color">
+            reviewer
+          </h2>
+        </div>
         <div className="flex justify-center ml-2 mb-10">
           <img
             src="../src/assets/koalaLogo.png"
             alt="Koala Code logo"
-            className="w-12 h-auto"
+            className="w-15 h-auto"
           />
         </div>
       </div>
@@ -44,20 +46,14 @@ function App() {
         </div>
       )}
 
-      <div className='flex flex-col items-center pb-18'>
+      <div className="flex flex-col items-center pb-18">
         {!review && (
-          <div className='text-center'>
-            <p>
-              If you feed me your code, 
-            </p>
-            <p>
-              I'll give you feedback.
-            </p>
+          <div className="text-center">
+            <p>If you feed me your code,</p>
+            <p>I'll give you feedback.</p>
           </div>
         )}
       </div>
-
-
 
       <div className="px-8 flex flex-col">
         <SubmitCodeForm handleSubmit={handleSubmit} loading={loading} />
