@@ -4,14 +4,15 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function App() {
-  const [code, setCode] = useState('');
+  const [diff, setDiff] = useState('');
+  const [intent, setIntent] = useState('');
   const [review, setReview] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/review', { code });
+      const response = await axios.post('http://localhost:8000/review', { diff, intent });
       setReview(response.data.review);
     } catch (error) {
       setReview('Error fetching review.');
@@ -21,16 +22,24 @@ function App() {
   };
 
   return (
-    <div className="p-4 bg-gray-100 px-8">
-      <h1 className="text-3xl font-bold mb-6 text-center ">AI Code Reviewer</h1>
+    <div className="p-4 bg-zinc-100 dark:bg-zinc-900 px-8 h-screen">
+      <img className="w-32 h-auto" src="/image.jpeg" />
 
       <textarea
-        className="w-full max-w-2xl h-64 p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
-        value={code}
+        className="w-full max-w-2xl h-64 p-3 border border-zinc-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
+        value={diff}
         minLength={10}
-        onChange={(e) => setCode(e.target.value)}
-        placeholder="Paste your code here..."
+        onChange={(e) => setDiff(e.target.value)}
+        placeholder="Paste your diff here..."
       />
+
+      <textarea
+        className="w-full max-w-2xl h-64 p-3 border border-zinc-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
+        value={intent}
+        minLength={10}
+        onChange={(e) => setIntent(e.target.value)}
+        placeholder="Describe your diff here..."
+      ></textarea>
 
       <button
         onClick={handleSubmit}
@@ -41,7 +50,7 @@ function App() {
       </button>
 
       {review && (
-        <div className="w-full max-w-2xl mt-6 bg-white p-4 rounded shadow-md">
+        <div className="w-full max-w-2xl mt-6 bg-white dark:bg-zinc-800 p-4 rounded shadow-md">
           <h2 className="font-semibold text-lg mb-2">Review Output:</h2>
           <SyntaxHighlighter language="markdown" style={oneDark} wrapLongLines>
             {review}
