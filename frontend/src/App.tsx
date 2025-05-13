@@ -21,12 +21,13 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-100 flex flex-row items-center justify-center p-4 ">
+    <div className="p-4 bg-gray-100 px-8">
       <h1 className="text-3xl font-bold mb-6 text-center ">AI Code Reviewer</h1>
-    
+
       <textarea
         className="w-full max-w-2xl h-64 p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
         value={code}
+        minLength={10}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Paste your code here..."
       />
