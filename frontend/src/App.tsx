@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { UserInput } from './components/form/UserInput';
 
 
@@ -46,9 +44,6 @@ function App() {
       {review && (
         <div className="w-full max-w-2xl mt-6 bg-white p-4 rounded shadow-md">
           <h2 className="font-semibold text-lg mb-2">Review Output:</h2>
-          <SyntaxHighlighter language="markdown" style={oneDark} wrapLongLines>
-            {review}
-          </SyntaxHighlighter>
         </div>
       )}
     </div>
