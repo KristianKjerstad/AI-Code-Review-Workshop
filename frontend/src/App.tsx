@@ -24,10 +24,10 @@ function App() {
   return (
     <div className="p-4 bg-white px-8">
       <div className="flex justify-center mt-10">
-        <h1 className="text-xl font-bold text-center text-gray-800 mt-10">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mt-10">
           Koala code
         </h1>
-        <h2 className="text-xl font-bold text-center text-gray-800 mt-10 ml-1">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mt-10 ml-2">
           reviewer
         </h2>
         <div className="flex justify-center ml-2 mb-10">
