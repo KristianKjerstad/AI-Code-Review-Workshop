@@ -13,7 +13,7 @@ app = FastAPI()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Path to project files
-PROJECT_BASE_PATH = os.getenv("PROJECT_BASE_PATH", "./")
+PROJECT_BASE_PATH = os.getenv("PROJECT_BASE_PATH", "../../dingo-code")
 
 # Domain description to help AI understand context
 domain_description = """
@@ -80,6 +80,7 @@ And here are all the existing files in the project, separated clearly by filenam
 Please perform a code review, focusing on correctness, performance, readability, adherence to best practices, and alignment with the stated intent. Respond with specific, actionable feedback.
 You are very strict, and will nitpick if you can not find anything to give feedback on.
 You are not afraid to make the developer cry! Show no mercy!
+Use Markdown and emojis to make the output pretty.
 """
     return prompt
 
