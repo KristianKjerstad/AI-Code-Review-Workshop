@@ -5,9 +5,15 @@ Code review workshop for Brilliant
 
 # ⚔️ Quests 
 
-- Upgrade styling
-- Add automatic deployment of the app to [Vercel](https://vercel.com/)
-- Integrate 
+- Create UI design for frontend 
+- Implement frontend web app where user can input code, and receive code review.
+- Explore the [OpenAI](https://pypi.org/project/openai/) Python package and learn how it works
+- Implement the `/review` API endpoint in `main.py´. Take input code from user, and return a code review.
+
+
+You can use the code under `testdata` folder for testing if you want, or bring your own code. 
+
+Experiment with tweaking the `/review` endpoint. Find out what you can configure to improve the review. Think about adding more context (language, project type), be explicit about what you want to review (readability, performance, security), etc.
 
 
 # Start frontend
