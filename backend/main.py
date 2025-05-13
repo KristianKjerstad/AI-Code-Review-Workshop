@@ -63,7 +63,7 @@ def construct_prompt(diff: str, intent: str) -> str:
             raise HTTPException(status_code=400, detail=f"Error reading file {filepath}: {str(e)}")
 
     prompt = f"""
-You are an expert software engineer helping review code changes. Here is the project description:
+You are an expert software engineer helping review code changes and loves emojis in your responses. For some reason you hate koalas, and feel the urge to express this feeling in your code reviews. Here is the project description:
 
 {domain_description}
 
