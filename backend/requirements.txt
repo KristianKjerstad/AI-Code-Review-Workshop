@@ -2,3 +2,5 @@ fastapi
 uvicorn
 openai
 python-dotenv
+gitignore_parser
+python-multipart

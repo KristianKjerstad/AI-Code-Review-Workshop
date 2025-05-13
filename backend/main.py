@@ -1,38 +1,88 @@
-# FILE: /backend/main.py
-
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-import openai
-import os
-from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Form
 from pydantic import BaseModel
-
-load_dotenv()  # Load environment variables from .env
+from typing import List
+import os
+import pathlib
+import subprocess
+from gitignore_parser import parse_gitignore
 
 app = FastAPI()
 
-# Enable CORS for development
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Update if needed
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Path to project files
+PROJECT_BASE_PATH = os.getenv("PROJECT_BASE_PATH", "../../dingo-diff")
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Domain description to help AI understand context
+domain_description = """
+This software project is a web-based platform that enables developers to collaborate on code reviews using AI assistance. The AI provides comments and suggestions on git diffs, evaluating changes in context of the project and intended outcomes.
+"""
 
+# --- File Scanner ---
 
-class ReviewRequest(BaseModel):
-    code: str
+def get_all_project_files(base_path: str) -> List[str]:
+    gitignore_path = os.path.join(base_path, '.gitignore')
+    is_ignored = parse_gitignore(gitignore_path) if os.path.exists(gitignore_path) else lambda path: False
 
-class ReviewResponse(BaseModel):
-    raw_code: str
-    review: str
+    file_paths = []
+    for root, dirs, files in os.walk(base_path):
+        for file in files:
+            full_path = os.path.join(root, file)
+            rel_path = os.path.relpath(full_path, base_path)
+            if not is_ignored(rel_path):
+                file_paths.append(full_path)
+    return file_paths
 
+# --- Git Pull ---
 
+def update_repository(base_path: str):
+    try:
+        result = subprocess.run(["git", "pull"], cwd=base_path, capture_output=True, text=True)
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Git pull failed: {str(e)}")
 
-@app.post("/review")
-async def review_code(request: ReviewRequest) -> ReviewResponse:
+# --- AI Prompt Construction ---
 
-    review = "test"
-    return ReviewResponse(raw_code=request.code, review=review)
+def construct_prompt(diff: str, intent: str) -> str:
+    # update_repository(PROJECT_BASE_PATH)
+
+    files_content = ""
+    for filepath in get_all_project_files(PROJECT_BASE_PATH):
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+                rel_path = os.path.relpath(filepath, PROJECT_BASE_PATH)
+                files_content += f"\n\n--- FILE: {rel_path} ---\n{content}\n"
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Error reading file {filepath}: {str(e)}")
+
+    prompt = f"""
+You are an expert software engineer helping review code changes. Here is the project description:
+
+{domain_description}
+
+The developer intends to: "{intent}"
+
+Below is the full git diff of the proposed change:
+
+{diff}
+
+And here are all the existing files in the project, separated clearly by filename:
+
+{files_content}
+
+Please perform a code review, focusing on correctness, performance, readability, adherence to best practices, and alignment with the stated intent. Respond with specific, actionable feedback.
+You are very strict, and will nitpick if you can not find anything to give feedback on.
+You are not afraid to make the developer cry! Show no mercy!
+"""
+    return prompt
+
+# --- FastAPI Endpoint ---
+
+@app.post("/code-review")
+def code_review(
+    diff: str = Form(...),
+    intent: str = Form(...)
+):
+    prompt = construct_prompt(diff, intent)
+    return {"prompt": prompt}
