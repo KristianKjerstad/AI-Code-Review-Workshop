@@ -1,6 +1,6 @@
-import { useState } from "react";
-import axios from "axios";
-import { UserInput } from "./components/form/UserInput";
+import { useState } from 'react';
+import axios from 'axios';
+import { SubmitCodeForm } from './components/SubmitCodeForm/SubmitCodeForm';
 
 function App() {
   const [code, setCode] = useState("");
@@ -22,7 +22,7 @@ function App() {
   };
 
   return (
-    <div className="p-4 bg-white px-8">
+    <div className="p-4 bg-white px-8 h-screen flex flex-col justify-between">
       <div className="flex justify-center mt-10">
         <h1 className="text-2xl font-bold text-center text-gray-800 mt-10">
           Koala code
@@ -38,22 +38,30 @@ function App() {
           />
         </div>
       </div>
-
-      <UserInput />
-
-      <button
-        onClick={handleSubmit}
-        className="px-6 py-2 bg-blue-600 text-white font-semibold rounded shadow hover:bg-blue-700 transition-colors"
-        disabled={loading}
-      >
-        {loading ? "Reviewing..." : "Submit for Review"}
-      </button>
-
       {review && (
         <div className="w-full max-w-2xl mt-6 bg-white p-4 rounded shadow-md">
           <h2 className="font-semibold text-lg mb-2">Review Output:</h2>
         </div>
       )}
+
+      <div className='flex flex-col items-center pb-18'>
+        {!review && (
+          <div className='text-center'>
+            <p>
+              If you feed me your code, 
+            </p>
+            <p>
+              I'll give you feedback.
+            </p>
+          </div>
+        )}
+      </div>
+
+
+
+      <div className="px-8 flex flex-col">
+        <SubmitCodeForm handleSubmit={handleSubmit} loading={loading} />
+      </div>
     </div>
   );
 }
