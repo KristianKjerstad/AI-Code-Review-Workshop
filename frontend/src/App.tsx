@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { UserInput } from './components/form/UserInput';
-
+import { SubmitCodeForm } from './components/SubmitCodeForm/SubmitCodeForm';
 
 function App() {
   const [code, setCode] = useState('');
@@ -23,15 +22,8 @@ function App() {
   return (
     <div className="p-4 bg-gray-100 px-8">
       <h1 className="text-3xl font-bold mb-6 text-center ">AI Code Reviewer</h1>
-      <UserInput />
+      <SubmitCodeForm handleSubmit={handleSubmit} loading={loading} />
 
-      <button
-        onClick={handleSubmit}
-        className="px-6 py-2 bg-blue-600 text-white font-semibold rounded shadow hover:bg-blue-700 transition-colors"
-        disabled={loading}
-      >
-        {loading ? 'Reviewing...' : 'Submit for Review'}
-      </button>
 
       {review && (
         <div className="w-full max-w-2xl mt-6 bg-white p-4 rounded shadow-md">
