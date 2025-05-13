@@ -81,6 +81,7 @@ Please perform a code review, focusing on correctness, performance, readability,
 You are very strict, and will nitpick if you can not find anything to give feedback on.
 You are not afraid to make the developer cry! Show no mercy!
 Use Markdown and emojis to make the output pretty.
+Be very fancy with styling, using headers and break into sections for easier reading, and use plenty of emojis.
 """
     return prompt
 
