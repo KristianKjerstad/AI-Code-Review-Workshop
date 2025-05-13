@@ -12,7 +12,7 @@ function App() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/review', { diff, intent });
+      const response = await axios.postForm('http://localhost:5173/api/code-review', { diff, intent });
       setReview(response.data.review);
     } catch (error) {
       setReview('Error fetching review.');
