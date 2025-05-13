@@ -1,7 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { UserInput } from "./components/form/UserInput";
 
 function App() {
@@ -25,16 +23,22 @@ function App() {
 
   return (
     <div className="p-4 bg-white px-8">
-      <div className="flex justify-center mb-4 mt-10">
-        <img
-          src="../src/assets/koalaLogo.png"
-          alt="Koala Code logo"
-          className="w-16 h-auto"
-        />
+      <div className="flex justify-center mt-10">
+        <h1 className="text-xl font-bold text-center text-gray-800 mt-10">
+          Koala code
+        </h1>
+        <h2 className="text-xl font-bold text-center text-gray-800 mt-10 ml-1">
+          reviewer
+        </h2>
+        <div className="flex justify-center ml-2 mb-10">
+          <img
+            src="../src/assets/koalaLogo.png"
+            alt="Koala Code logo"
+            className="w-12 h-auto"
+          />
+        </div>
       </div>
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        Koala code reviewer
-      </h1>
+
       <UserInput />
 
       <textarea
@@ -56,9 +60,6 @@ function App() {
       {review && (
         <div className="w-full max-w-2xl mt-6 bg-white p-4 rounded shadow-md">
           <h2 className="font-semibold text-lg mb-2">Review Output:</h2>
-          <SyntaxHighlighter language="markdown" style={oneDark} wrapLongLines>
-            {review}
-          </SyntaxHighlighter>
         </div>
       )}
     </div>
