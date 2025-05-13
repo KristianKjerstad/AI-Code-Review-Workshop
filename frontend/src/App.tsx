@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { UserInput } from './components/form/UserInput';
+
 
 function App() {
   const [code, setCode] = useState('');
@@ -23,6 +25,7 @@ function App() {
   return (
     <div className="p-4 bg-gray-100 px-8">
       <h1 className="text-3xl font-bold mb-6 text-center ">AI Code Reviewer</h1>
+      <UserInput />
 
       <textarea
         className="w-full max-w-2xl h-64 p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
