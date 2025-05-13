@@ -2,19 +2,19 @@ from typing import Protocol
 from pydantic import BaseModel
 
 class KoalaFeedback(BaseModel):
-    feedback: str
-    review: str
+    msg: str
+    code_suggestion: str
 
 class KoalaResponse(BaseModel):
     feedback: list[KoalaFeedback]
 
-class ReviewRepo(Protocol):
+class KoalaRepo(Protocol):
 
     def review(self, code: str) -> KoalaResponse:
         ...
 
 
-class OpenAIKoalaRepo(ReviewRepo):
+class OpenAIKoalaRepo(KoalaRepo):
 
     def __init__(self) -> None:
         super().__init__()
@@ -22,6 +22,15 @@ class OpenAIKoalaRepo(ReviewRepo):
     def review(self, code: str) -> KoalaResponse:
         return KoalaResponse(
             feedback=[
-                KoalaFeedback(feedback="HEEI<3", review="Here is your review, from the koala")
+                KoalaFeedback(msg="HEEI<3", code_suggestion="Here is your review, from the koala")
+            ]
+        )
+
+class MockKoalaRepo(KoalaRepo):
+
+    def review(self, code: str) -> KoalaResponse:
+        return KoalaResponse(
+            feedback=[
+                KoalaFeedback(msg="HEEI FROM MOCK REPO<3", code_suggestion="Here is your review, from the koala")
             ]
         )

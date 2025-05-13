@@ -1,10 +1,10 @@
-from review_repo import KoalaResponse, ReviewRepo
+from review_repo import KoalaResponse, KoalaRepo
 import review_repo
 
 class ReviewService:
-    review_repo: ReviewRepo
+    review_repo: KoalaRepo
 
-    def __init__(self, review_repo: ReviewRepo):
+    def __init__(self, review_repo: KoalaRepo):
         self.review_repo = review_repo
 
     def review(self, code: str) -> KoalaResponse:

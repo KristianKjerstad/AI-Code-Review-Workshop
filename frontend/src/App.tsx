@@ -41,14 +41,6 @@ function App() {
 
       <UserInput />
 
-      <textarea
-        className="w-full max-w-2xl h-64 p-3 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
-        value={code}
-        minLength={10}
-        onChange={(e) => setCode(e.target.value)}
-        placeholder="Paste your code here..."
-      />
-
       <button
         onClick={handleSubmit}
         className="px-6 py-2 bg-blue-600 text-white font-semibold rounded shadow hover:bg-blue-700 transition-colors"

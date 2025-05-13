@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
-from review_repo import KoalaResponse, OpenAIKoalaRepo
+from review_repo import KoalaResponse, MockKoalaRepo, OpenAIKoalaRepo
 from review_service import ReviewService
 
 load_dotenv()  # Load environment variables from .env
@@ -37,6 +37,6 @@ class ReviewResponse(BaseModel):
 
 @app.post("/review")
 async def review_code(request: ReviewRequest) -> KoalaResponse:
-    svc = ReviewService(review_repo=OpenAIKoalaRepo())
+    svc = ReviewService(review_repo=MockKoalaRepo())
 
     return svc.review(request.code)

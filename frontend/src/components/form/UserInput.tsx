@@ -1,12 +1,12 @@
 export function UserInput() {
   return (
-    <div>
-      <label htmlFor="user-input">Code input</label>
+    <div className="flex flex-col my-2">
       <textarea
         name="user-input"
         id="user-input"
         placeholder="Write your code"
-      ></textarea>
+        className="p-1 h-[200px] w-max-[700px] border-1 rounded-md"
+      />
     </div>
   );
 }
