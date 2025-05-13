@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Markdown from "react-markdown";
 
 function App() {
   const [diff, setDiff] = useState('');
@@ -22,7 +23,7 @@ function App() {
   };
 
   return (
-    <div className="p-4 bg-zinc-100 dark:bg-zinc-900 px-8 h-screen">
+    <div className="p-4 bg-zinc-100 dark:bg-zinc-900 px-8 h-full">
       <img className="w-32 h-auto" src="/image.jpeg" />
 
       <textarea
@@ -52,9 +53,9 @@ function App() {
       {review && (
         <div className="w-full max-w-2xl mt-6 bg-white dark:bg-zinc-800 p-4 rounded shadow-md">
           <h2 className="font-semibold text-lg mb-2">Review Output:</h2>
-          <SyntaxHighlighter language="markdown" style={oneDark} wrapLongLines>
+          <Markdown>
             {review}
-          </SyntaxHighlighter>
+          </Markdown>
         </div>
       )}
     </div>
