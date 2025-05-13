@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { SubmitCodeForm } from './components/SubmitCodeForm/SubmitCodeForm';
+import { MessageBubble } from './components/MessageBubble/MessageBubble';
 
 function App() {
   const [code, setCode] = useState("");
+  
   const [review, setReview] = useState("");
+  const [showReview, setShowReview] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -38,14 +41,12 @@ function App() {
           />
         </div>
       </div>
-      {review && (
-        <div className="w-full max-w-2xl mt-6 bg-white p-4 rounded shadow-md">
-          <h2 className="font-semibold text-lg mb-2">Review Output:</h2>
-        </div>
+      {showReview && (
+          <MessageBubble variant='user' output={code} />
       )}
 
       <div className='flex flex-col items-center pb-18'>
-        {!review && (
+        {!showReview && (
           <div className='text-center'>
             <p>
               If you feed me your code, 

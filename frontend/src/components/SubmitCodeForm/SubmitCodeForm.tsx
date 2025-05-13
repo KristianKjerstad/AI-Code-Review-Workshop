@@ -8,7 +8,7 @@ type SubmitCodeForm = {
 
 export function SubmitCodeForm({handleSubmit, loading}: SubmitCodeForm) {
     return (
-        <div>
+        <div className='mb-4'>
              <UserInput />
              <SubmitButton handleSubmit={handleSubmit} loading={loading} />
         </div>
