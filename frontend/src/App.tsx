@@ -27,17 +27,19 @@ function App() {
   return (
     <div className=" bg-white m-auto px-8 h-screen flex flex-col justify-between max-w-[800px]">
       <div className="flex justify-center mt-10">
-        <h1 className="text-xl font-bold text-center text-gray-800 mt-10">
-          Koala code
-        </h1>
-        <h2 className="text-xl font-bold text-center text-gray-800 mt-10 ml-1">
-          reviewer
-        </h2>
+        <div className="flex flex-col">
+          <h1 className="text-2xl font-bold text-center text-gray-800 uppercase text-left">
+            Koala code
+          </h1>
+          <h2 className="text-3xl font-bold text-center text-gray-800 mt-0 uppercase text-left logo-color">
+            reviewer
+          </h2>
+        </div>
         <div className="flex justify-center ml-2 mb-10">
           <img
             src="../src/assets/koalaLogo.png"
             alt="Koala Code logo"
-            className="w-12 h-auto"
+            className="w-15 h-auto"
           />
         </div>
       </div>
@@ -57,8 +59,6 @@ function App() {
           </div>
         )}
       </div>
-
-
 
       <div className="px-8 flex flex-col">
         <SubmitCodeForm handleSubmit={handleSubmit} loading={loading} />
