@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="p-4 bg-zinc-100 dark:bg-zinc-900 px-8 h-full w-full">
-      <img className="w-32 h-auto" src="/image.jpeg" />
+      <img className="w-32 h-auto" src="/image.png" />
 
       <textarea
         className="w-full max-w-2xl h-64 p-3 border border-zinc-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300 mb-4"
